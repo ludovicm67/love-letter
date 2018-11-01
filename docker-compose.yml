@@ -1,0 +1,27 @@
+version: "3"
+services:
+  front:
+    build: ./front
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      - "back"
+  back:
+    build: ./back
+    restart: always
+    ports:
+      - "1337:80"
+      - "1338:1338"
+    depends_on:
+      - "database"
+      - "redis"
+  database:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: love_letter
+  redis:
+    image: redis
+    restart: always
